@@ -1,3 +1,3 @@
 # hmdata
-测试
- 多大事达大厦2
+
+https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/hah.json
