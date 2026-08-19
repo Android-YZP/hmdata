@@ -1,0 +1,130 @@
+<!-- 快捷设置面板 HTML 片段：由首页注入到 #quick_settings_sheet_host。 -->
+    <div id="quick_settings_sheet" class="quick-settings-sheet" hidden>
+            <section id="quick_settings_sheet_panel" class="quick-settings-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="quick_settings_sheet_title">
+                <header class="quick-settings-sheet__header">
+                    <div class="quick-settings-sheet__header-main">
+                        <h2 id="quick_settings_sheet_title" class="quick-settings-sheet__title">快捷设置</h2>
+                        <button id="quick_settings_sheet_theme_toggle" class="quick-settings-sheet__theme-toggle" type="button" aria-pressed="false">亮色</button>
+                    </div>
+                    <button id="quick_settings_sheet_close" class="quick-settings-sheet__close" type="button" aria-label="关闭快捷设置" title="关闭">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </header>
+            <div class="quick-settings-sheet__content">
+                <section class="quick-settings-sheet__section" aria-labelledby="quick_settings_general_title">
+                    <h3 id="quick_settings_general_title" class="quick-settings-sheet__section-title">通用设置</h3>
+                    <div class="quick-settings-sheet__list">
+                        <div id="quick_settings_preset_manager" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-sliders quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">预设管理</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_model_switch" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-robot quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">模型切换</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_image_settings" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-image quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">生图设置</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_tts_settings_toggle" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-volume-high quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">语音设置</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_chat_virtualization_toggle" class="quick-settings-sheet__row">
+                            <i class="fa-solid fa-gauge-high quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">极速模式</span>
+                            <button id="quick_settings_chat_virtualization_toggle_switch" class="quick-settings-sheet__switch" type="button" role="switch" aria-label="极速模式" aria-checked="false"><span aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="quick-settings-sheet__section" aria-labelledby="quick_settings_chat_style_title">
+                    <h3 id="quick_settings_chat_style_title" class="quick-settings-sheet__section-title">聊天美化</h3>
+                    <div class="quick-settings-sheet__list">
+                        <div id="quick_settings_font_settings" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-font quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">字体设置</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_theme_settings" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-palette quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">美化主题</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_background_settings" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-panorama quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">背景设置</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="quick-settings-sheet__section" aria-labelledby="quick_settings_memory_title">
+                    <h3 id="quick_settings_memory_title" class="quick-settings-sheet__section-title">永久记忆</h3>
+                    <div class="quick-settings-sheet__list">
+                        <div id="quick_settings_horae_toggle" class="quick-settings-sheet__row">
+                            <i class="fa-solid fa-clock-rotate-left quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">打开时光记忆</span>
+                            <button id="quick_settings_horae_toggle_switch" class="quick-settings-sheet__switch" type="button" role="switch" aria-label="打开时光记忆" aria-checked="false"><span aria-hidden="true"></span></button>
+                        </div>
+                        <div id="quick_settings_memory_panel" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-memory quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">记忆面板</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_database_toggle" class="quick-settings-sheet__row">
+                            <i class="fa-solid fa-database quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">打开数据库</span>
+                            <button id="quick_settings_database_toggle_switch" class="quick-settings-sheet__switch" type="button" role="switch" aria-label="打开数据库" aria-checked="false"><span aria-hidden="true"></span></button>
+                        </div>
+                        <div id="quick_settings_database_panel" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-table-list quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">数据库面板</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="quick-settings-sheet__section" aria-labelledby="quick_settings_variable_title">
+                    <h3 id="quick_settings_variable_title" class="quick-settings-sheet__section-title">变量与状态</h3>
+                    <div class="quick-settings-sheet__list">
+                        <div id="quick_settings_mvu_settings" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-square-root-variable quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">MVU 变量框架</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_mvu_quick_buttons_toggle" class="quick-settings-sheet__row">
+                            <i class="fa-solid fa-bolt quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">变量快捷按钮</span>
+                            <button id="quick_settings_mvu_quick_buttons_toggle_switch" class="quick-settings-sheet__switch" type="button" role="switch" aria-label="变量快捷按钮" aria-checked="false"><span aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="quick-settings-sheet__section" aria-labelledby="quick_settings_chat_actions_title">
+                    <h3 id="quick_settings_chat_actions_title" class="quick-settings-sheet__section-title">聊天操作</h3>
+                    <div class="quick-settings-sheet__list">
+                        <div id="quick_settings_chat_add_image" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-image quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">添加图片</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_character_worldbook" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-book-open quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">查看世界书</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                        <div id="quick_settings_chat_close" class="quick-settings-sheet__row" role="button" tabindex="0">
+                            <i class="fa-solid fa-xmark quick-settings-sheet__row-icon" aria-hidden="true"></i>
+                            <span class="quick-settings-sheet__row-label">关闭聊天</span>
+                            <i class="fa-solid fa-chevron-right quick-settings-sheet__row-arrow" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
