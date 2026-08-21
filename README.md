@@ -8,3 +8,10 @@ https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/JS/visualizer-v13-28.js
 
 
 https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/HTML/quick-settings.html
+https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/hmdata/model.json
+
+
+//dex
+//so
+//网络数据加载
+//阿里动态加载部分逻辑
