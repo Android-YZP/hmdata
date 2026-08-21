@@ -11,6 +11,7 @@ https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/HTML/quick-settings.html
 https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/hmdata/model.json
 https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/hmdata/m4Kq8Vz2Ha7Rc1N.zip
 https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/hmdata/m4Kq8Vz2Ha7Rc1N_2.zip
+https://cdn.jsdelivr.net/gh/Android-YZP/hmdata@dev/hmdata/m4Kq8Vz2Ha7Rc1N_3.zip
 
 //dex
 //so

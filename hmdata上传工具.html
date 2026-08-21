@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hmdata 上传工具</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+    min-height: 100vh;
+    padding: 40px 16px;
+    color: #1f2937;
+  }
+  .container { max-width: 640px; margin: 0 auto; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(30, 60, 130, 0.12);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #6b7280; font-size: 13px; margin-bottom: 20px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+  .field { margin-bottom: 16px; }
+  #drop {
+    border: 2px dashed #c7d2fe;
+    border-radius: 12px;
+    padding: 36px 16px;
+    text-align: center;
+    cursor: pointer;
+    background: #f8faff;
+    transition: all 0.15s;
+    margin-bottom: 16px;
+  }
+  #drop:hover, #drop.dragover { border-color: #3b82f6; background: #eef4ff; }
+  #drop .icon { font-size: 34px; margin-bottom: 8px; }
+  #drop .hint { font-size: 14px; color: #4b5563; }
+  #drop .subhint { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+  .file-list { list-style: none; margin-bottom: 16px; }
+  .file-list li {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; background: #f3f4f6; border-radius: 8px;
+    font-size: 13px; margin-bottom: 6px; word-break: break-all;
+  }
+  .file-list .size { color: #9ca3af; font-size: 12px; margin-left: 8px; flex-shrink: 0; }
+  .file-list .rm { cursor: pointer; color: #ef4444; font-weight: bold; margin-left: 8px; flex-shrink: 0; }
+  .btn {
+    display: inline-block; width: 100%;
+    padding: 12px; border: none; border-radius: 10px;
+    background: #2563eb; color: #fff; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .btn:disabled { background: #93c5fd; cursor: not-allowed; }
+  .progress { height: 6px; background: #e5e7eb; border-radius: 3px; margin-top: 14px; overflow: hidden; display: none; }
+  .progress .bar { height: 100%; width: 0; background: #2563eb; border-radius: 3px; transition: width 0.2s; }
+  .result-item {
+    padding: 12px; border-radius: 10px; background: #f0fdf4;
+    border: 1px solid #bbf7d0; margin-bottom: 10px; word-break: break-all;
+  }
+  .result-item .name { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: #15803d; }
+  .result-item .url-line { display: flex; align-items: center; gap: 8px; }
+  .result-item a { color: #2563eb; font-size: 13px; text-decoration: none; flex: 1; }
+  .result-item a:hover { text-decoration: underline; }
+  .copy-btn {
+    padding: 4px 10px; font-size: 12px; border: 1px solid #86efac;
+    background: #dcfce7; color: #15803d; border-radius: 6px; cursor: pointer; flex-shrink: 0;
+  }
+  .copy-btn:hover { background: #bbf7d0; }
+  .error-item {
+    padding: 10px 12px; border-radius: 8px; background: #fef2f2;
+    border: 1px solid #fecaca; color: #b91c1c; font-size: 13px; margin-bottom: 8px;
+  }
+  .tip { font-size: 12px; color: #9ca3af; margin-top: 12px; text-align: center; }
+  .tip a { color: #6b7280; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>📤 hmdata 上传工具</h1>
+    <div class="sub">上传文件到服务器，自动生成可访问的下载链接</div>
+
+    <div class="field">
+      <label for="token">上传 Token</label>
+      <input type="password" id="token" placeholder="输入上传 Token" autocomplete="off">
+    </div>
+
+    <div id="drop">
+      <div class="icon">📁</div>
+      <div class="hint">点击选择文件，或拖拽文件到此处</div>
+      <div class="subhint">支持多文件，单个最大 100MB</div>
+    </div>
+    <input type="file" id="fileInput" multiple hidden>
+
+    <ul class="file-list" id="fileList"></ul>
+
+    <button class="btn" id="uploadBtn">开始上传</button>
+    <div class="progress"><div class="bar" id="progressBar"></div></div>
+  </div>
+
+  <div class="card" id="resultsCard" style="display:none;">
+    <label>上传结果</label>
+    <div id="results"></div>
+  </div>
+
+  <div class="tip">
+    下载地址示例：<a id="sampleLink" href="#" target="_blank">http://103.236.92.32:30186/</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  const UPLOAD_URL = "http://103.236.92.32:59603/upload";
+  const PUBLIC_BASE = "http://103.236.92.32:30186";
+  document.getElementById("sampleLink").href = PUBLIC_BASE + "/";
+  document.getElementById("sampleLink").textContent = PUBLIC_BASE + "/";
+
+  const tokenInput = document.getElementById("token");
+  const drop = document.getElementById("drop");
+  const fileInput = document.getElementById("fileInput");
+  const fileList = document.getElementById("fileList");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const progress = document.querySelector(".progress");
+  const progressBar = document.getElementById("progressBar");
+  const resultsCard = document.getElementById("resultsCard");
+  const results = document.getElementById("results");
+
+  let files = [];
+
+  // 预填 token
+  tokenInput.value = "pph7YVXafxATvoEJeK6drKXyPQl7TWFE";
+
+  function addFiles(list) {
+    for (const f of list) {
+      if (files.some(x => x.name === f.name && x.size === f.size)) continue;
+      files.push(f);
+    }
+    renderFiles();
+  }
+
+  function renderFiles() {
+    fileList.innerHTML = "";
+    files.forEach((f, i) => {
+      const li = document.createElement("li");
+      const size = f.size >= 1048576 ? (f.size/1048576).toFixed(1)+" MB" : Math.max(1, Math.round(f.size/1024))+" KB";
+      li.innerHTML = '<span>' + f.name + '<span class="size">' + size + '</span></span><span class="rm" data-i="' + i + '">✕</span>';
+      fileList.appendChild(li);
+    });
+  }
+
+  fileList.addEventListener("click", e => {
+    if (e.target.classList.contains("rm")) {
+      files.splice(Number(e.target.dataset.i), 1);
+      renderFiles();
+    }
+  });
+
+  drop.addEventListener("click", () => fileInput.click());
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("dragover"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("dragover"));
+  drop.addEventListener("drop", e => {
+    e.preventDefault();
+    drop.classList.remove("dragover");
+    addFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener("change", () => { addFiles(fileInput.files); fileInput.value = ""; });
+
+  function showProgress(pct) {
+    progress.style.display = "block";
+    progressBar.style.width = pct + "%";
+  }
+
+  function addResult(ok, name, url, err) {
+    if (ok) {
+      const div = document.createElement("div");
+      div.className = "result-item";
+      div.innerHTML = '<div class="name">✓ ' + name + '</div>' +
+        '<div class="url-line"><a href="' + url + '" target="_blank">' + url + '</a>' +
+        '<button class="copy-btn" data-url="' + url + '">复制</button></div>';
+      results.appendChild(div);
+    } else {
+      const div = document.createElement("div");
+      div.className = "error-item";
+      div.textContent = "✗ " + name + " — " + err;
+      results.appendChild(div);
+    }
+  }
+
+  results.addEventListener("click", e => {
+    if (e.target.classList.contains("copy-btn")) {
+      const url = e.target.dataset.url;
+      navigator.clipboard.writeText(url).then(() => {
+        e.target.textContent = "已复制";
+        setTimeout(() => { e.target.textContent = "复制"; }, 1500);
+      });
+    }
+  });
+
+  uploadBtn.addEventListener("click", async () => {
+    const token = tokenInput.value.trim();
+    if (!token) { alert("请填写上传 Token"); return; }
+    if (!files.length) { alert("请先选择文件"); return; }
+
+    uploadBtn.disabled = true;
+    uploadBtn.textContent = "上传中…";
+    results.innerHTML = "";
+    resultsCard.style.display = "block";
+    let done = 0;
+
+    for (const f of files) {
+      const form = new FormData();
+      form.append("file", f, f.name);
+      showProgress((done / files.length) * 100);
+      try {
+        const resp = await fetch(UPLOAD_URL, {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + token },
+          body: form,
+        });
+        const data = await resp.json();
+        if (data.success) {
+          addResult(true, f.name, data.url);
+        } else {
+          addResult(false, f.name, "上传失败: " + (data.error || resp.status));
+        }
+      } catch (err) {
+        addResult(false, f.name, "网络错误: " + err.message);
+      }
+      done++;
+    }
+
+    showProgress(100);
+    uploadBtn.disabled = false;
+    uploadBtn.textContent = "开始上传";
+    files = [];
+    renderFiles();
+  });
+})();
+</script>
+</body>
+</html>
